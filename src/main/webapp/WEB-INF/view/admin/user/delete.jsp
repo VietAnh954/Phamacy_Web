@@ -10,7 +10,7 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
                 <meta name="description" content="Dự án PhamacyStore" />
                 <meta name="author" content="VietAnh" />
-                <title>Update User</title>
+                <title>Create User</title>
                 <link href="/css/styles.css" rel="stylesheet" />
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
             </head>
@@ -28,39 +28,28 @@
                                     <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
                                     <li class="breadcrumb-item active">Users</li>
                                 </ol>
-                                <div class=" container mt-5">
+                                <div class="container mt-5">
                                     <div class="row">
                                         <div class="col-md-6 col-12 mx-auto">
-                                            <h3>Update user</h3>
+                                            <div class="d-flex justify-content-between">
+                                                <h3>Delete user with id = ${id}</h3>
+                                            </div>
                                             <hr />
-                                            <form:form method="post" action="/admin/user/update"
+                                            <div class="alert alert-danger" role="alert">
+                                                A simple danger alert—check it out!
+                                            </div>
+                                            <form:form method="post" action="/admin/user/delete"
                                                 modelAttribute="newUser">
                                                 <div class="mb-3" style=display:none>
                                                     <label class="form-label">Id:</label>
-                                                    <form:input type="text" class="form-control" path="id" />
+                                                    <form:input value="${id}" type="text" class="form-control"
+                                                        path="id" />
                                                 </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Email:</label>
-                                                    <form:input type="email" class="form-control" path="email"
-                                                        disabled="true" />
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Phone number:</label>
-                                                    <form:input type="text" class="form-control" path="phoneNumber" />
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Full Name:</label>
-                                                    <form:input type="text" class="form-control" path="fullName" />
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Address:</label>
-                                                    <form:input type="text" class="form-control" path="address" />
-                                                </div>
-
                                                 <div class="d-flex gap-2 mt-3">
-                                                    <button type="submit" class="btn btn-warning">Update</button>
+                                                    <button class="btn btn-danger">Confirm</button>
                                                     <a href="/admin/user" class="btn btn-success">Back</a>
                                                 </div>
+
                                             </form:form>
                                         </div>
 

@@ -1,11 +1,18 @@
 package com.example.Phamacy_Project.domain;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
-@Entity(name = "User")
+@Entity
+@Table(name = "users")
 public class User {
 
     @Id
@@ -17,6 +24,30 @@ public class User {
     private String password;
     private String phoneNumber;
     private String address;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
+
+    // 1 user có nhiều order
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
 
     @Override
     public String toString() {
