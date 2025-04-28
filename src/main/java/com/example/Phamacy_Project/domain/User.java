@@ -25,6 +25,8 @@ public class User {
     private String phoneNumber;
     private String address;
 
+    private String avatar;
+
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
@@ -47,12 +49,6 @@ public class User {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
-    }
-
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", fullName=" + fullName + ", email=" + email + ", password=" + password
-                + ", phoneNumber=" + phoneNumber + ", address=" + address + "]";
     }
 
     public long getId() {
@@ -101,6 +97,21 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", fullName=" + fullName + ", email=" + email + ", password=" + password
+                + ", phoneNumber=" + phoneNumber + ", address=" + address + ", avatar=" + avatar + ", role=" + role
+                + "]";
     }
 
 }

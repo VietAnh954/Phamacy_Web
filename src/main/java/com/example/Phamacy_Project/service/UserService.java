@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.Phamacy_Project.domain.Role;
 import com.example.Phamacy_Project.domain.User;
+import com.example.Phamacy_Project.domain.dto.RegisterDTO;
 import com.example.Phamacy_Project.repository.RoleRepository;
 import com.example.Phamacy_Project.repository.UserRepository;
 
@@ -42,5 +43,19 @@ public class UserService {
 
     public Role getRoleByName(String name) {
         return this.roleRepository.findByName(name);
+    }
+
+    public boolean checkEmailExist(String email) {
+        return this.userRepository.existsByEmail(email);
+
+    }
+
+    public User registerDTOtoUser(RegisterDTO registerDTO) {
+        User user = new User();
+        user.setFullName(registerDTO.getFirstName() + "" + registerDTO.getLastName());
+
+        user.setEmail(registerDTO.getEmail());
+        user.setPassword(registerDTO.getPassword());
+        return user;
     }
 }
