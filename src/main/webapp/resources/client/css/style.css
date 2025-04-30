@@ -510,3 +510,50 @@
 }
 
 /*** Footer End ***/
+
+
+/* Product Card Styles */
+.card {
+    transition: transform 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Filter Sidebar Styles */
+.sidebar {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.filter-section {
+    margin-bottom: 20px;
+}
+
+.price-inputs {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.price-inputs input {
+    width: 100px;
+}
+
+/* Search Bar Styles */
+.search-bar {
+    margin: 20px 0;
+}
+
+/* Pagination Styles */
+.pagination {
+    margin-top: 30px;
+}

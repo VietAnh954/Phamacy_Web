@@ -114,17 +114,17 @@
                                                 </div>
 
                                                 <div class="mb-3 col-12 col-md-6">
-                                                    <label class="form-label">Factory:</label>
-                                                    <form:select class="form-select" path="factory">
-                                                        <form:option value="APPLE">Apple (MacBook)</form:option>
-                                                        <form:option value="ASUS">Asus</form:option>
-                                                        <form:option value="LENOVO">Lenovo</form:option>
-                                                        <form:option value="DELL">Dell</form:option>
-                                                        <form:option value="LG">LG</form:option>
-                                                        <form:option value="ACER">Acer</form:option>
+                                                    <label class="form-label">Xuất Xứ:</label>
+                                                    <form:select class="form-select " path="factory">
+                                                        <form:option value="Hoa Kỳ">Hoa Kỳ</form:option>
+                                                        <form:option value="Ấn Độ">Ấn Độ</form:option>
+                                                        <form:option value="Singapore">Singapore</form:option>
+                                                        <form:option value="Việt Nam">Việt Nam</form:option>
+                                                        <form:option value="Pháp">Pháp</form:option>
+                                                        <form:option value="Đan Mạch">Đan Mạch</form:option>
                                                     </form:select>
                                                 </div>
-                                                <div class="mb-3 col-12 col-md-6">
+                                                <!-- <div class="mb-3 col-12 col-md-6">
                                                     <label class="form-label">Target:</label>
                                                     <form:select class="form-select" path="target">
                                                         <form:option value="GAMING">Gaming</form:option>
@@ -135,7 +135,7 @@
                                                         <form:option value="MONG-NHE">Mỏng nhẹ</form:option>
                                                         <form:option value="DOANH-NHAN">Doanh nhân</form:option>
                                                     </form:select>
-                                                </div>
+                                                </div> -->
                                                 <div class="mb-3 col-12 col-md-6">
                                                     <label for="avatarFile" class="form-label">Image:</label>
                                                     <input class="form-control" type="file" id="avatarFile"

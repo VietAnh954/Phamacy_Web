@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
 
@@ -34,7 +35,28 @@ public class HomePageController {
     public String getHomePage(Model model) {
         List<Product> products = this.productService.getAllProducts();
         model.addAttribute("product1", products);
+        return "client/homepage/show";
+    }
 
+    @GetMapping("/search")
+    public String searchProducts(@RequestParam String keyword, Model model) {
+        List<Product> products = this.productService.searchProducts(keyword);
+        model.addAttribute("product1", products);
+        model.addAttribute("keyword", keyword);
+        return "client/homepage/show";
+    }
+
+    @GetMapping("/filter")
+    public String filterProducts(
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice,
+            @RequestParam(required = false) String factory,
+            Model model) {
+        List<Product> products = this.productService.filterProducts(minPrice, maxPrice, factory);
+        model.addAttribute("product1", products);
+        model.addAttribute("selectedFactory", factory);
+        model.addAttribute("selectedMinPrice", minPrice);
+        model.addAttribute("selectedMaxPrice", maxPrice);
         return "client/homepage/show";
     }
 

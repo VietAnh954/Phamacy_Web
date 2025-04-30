@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+
             <!DOCTYPE html>
             <html lang="en">
 
@@ -107,24 +108,24 @@
                                                 </div>
                                                 <div class="mb-3 col-12 col-md-6">
 
-                                                    <label class="form-label">Factory:</label>
+                                                    <label class="form-label">Xuất Xứ:</label>
                                                     <form:select class="form-select " path="factory">
-                                                        <form:option value="DELL">Dell</form:option>
-                                                        <form:option value="ASUS">Asus</form:option>
-                                                        <form:option value="LENOVO">Lenovo</form:option>
-                                                        <form:option value="ACER">Acer</form:option>
-                                                        <form:option value="HP">HP</form:option>
-                                                        <form:option value="APPLE">Apple</form:option>
+                                                        <form:option value="Hoa Kỳ">Hoa Kỳ</form:option>
+                                                        <form:option value="Ấn Độ">Ấn Độ</form:option>
+                                                        <form:option value="Singapore">Singapore</form:option>
+                                                        <form:option value="Việt Nam">Việt Nam</form:option>
+                                                        <form:option value="Pháp">Pháp</form:option>
+                                                        <form:option value="Đan Mạch">Đan Mạch</form:option>
                                                     </form:select>
 
                                                 </div>
-                                                <div class="mb-3 col-12 col-md-6">
+                                                <!-- <div class="mb-3 col-12 col-md-6">d
 
 
-                                                    <label class="form-label">Target:</label>
+                                                    <label class="form-label">Nhà sản xuất:</label>
 
                                                     <form:select class="form-select" path="target">
-                                                        <form:option value="GAMING">Gaming</form:option>
+                                                        <form:option value="EAGLE NUTRITIONAL INC">EAGLE NUTRITIONAL INC</form:option>
                                                         <form:option value="SINHVIEN- VANPHONG">Sinh Viên- Văn Phòng
                                                         </form:option>
                                                         <form:option value="THIET-KE-DO-HOA">thiết kế đồ họa
@@ -133,7 +134,7 @@
                                                         <form:option value="DOANH-NHAN">Doanh nhân</form:option>
                                                     </form:select>
 
-                                                </div>
+                                                </div> -->
                                                 <div class="mb-3 col-12 col-md-6">
 
                                                     <label for="avatarFile" class="form-label">Image:</label>
