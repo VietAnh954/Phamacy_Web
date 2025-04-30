@@ -6,13 +6,13 @@
         <div class="container mt-5">
             <div class="row">
                 <div class="col-md-6">
-                    <img src="${product.imageUrl}" class="img-fluid" alt="${product.name}">
+                    <img src="/images/product/${product.image}" class="img-fluid" alt="${product.name}">
                 </div>
                 <div class="col-md-6">
                     <h2>${product.name}</h2>
                     <p class="price">${product.price} VNĐ</p>
-                    <p class="origin">Xuất xứ: ${product.origin}</p>
-                    <p class="description">${product.description}</p>
+                    <p class="factory">Xuất xứ: ${product.factory}</p>
+                    <p class="shortDesc">${product.shortDesc}</p>
 
                     <div class="quantity">
                         <label>Số lượng:</label>
@@ -24,7 +24,7 @@
             </div>
 
             <!-- Related Products -->
-            <div class="related-products mt-5">
+            <!-- <div class="related-products mt-5">
                 <h3>Sản phẩm liên quan</h3>
                 <div class="row">
                     <c:forEach items="${relatedProducts}" var="relatedProduct">
@@ -41,7 +41,7 @@
                         </div>
                     </c:forEach>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <jsp:include page="../layout/footer.jsp" />
