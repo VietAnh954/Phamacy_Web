@@ -8,9 +8,8 @@
                 <meta charset="utf-8" />
                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-                <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
-                <meta name="author" content="Hỏi Dân IT" />
-                <title>Update Product - Hỏi Dân IT</title>
+
+                <title>Update Product</title>
                 <link href="/css/styles.css" rel="stylesheet" />
 
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -124,18 +123,7 @@
                                                         <form:option value="Đan Mạch">Đan Mạch</form:option>
                                                     </form:select>
                                                 </div>
-                                                <!-- <div class="mb-3 col-12 col-md-6">
-                                                    <label class="form-label">Target:</label>
-                                                    <form:select class="form-select" path="target">
-                                                        <form:option value="GAMING">Gaming</form:option>
-                                                        <form:option value="SINHVIEN-VANPHONG">Sinh viên - Văn phòng
-                                                        </form:option>
-                                                        <form:option value="THIET-KE-DO-HOA">Thiết kế đồ họa
-                                                        </form:option>
-                                                        <form:option value="MONG-NHE">Mỏng nhẹ</form:option>
-                                                        <form:option value="DOANH-NHAN">Doanh nhân</form:option>
-                                                    </form:select>
-                                                </div> -->
+
                                                 <div class="mb-3 col-12 col-md-6">
                                                     <label for="avatarFile" class="form-label">Image:</label>
                                                     <input class="form-control" type="file" id="avatarFile"

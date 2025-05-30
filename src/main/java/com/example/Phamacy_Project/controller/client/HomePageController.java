@@ -1,7 +1,10 @@
 package com.example.Phamacy_Project.controller.client;
 
 import java.util.List;
+import org.springframework.data.domain.Pageable;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,11 +14,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
+import com.example.Phamacy_Project.domain.Order;
 import com.example.Phamacy_Project.domain.Product;
 import com.example.Phamacy_Project.domain.User;
 import com.example.Phamacy_Project.domain.dto.RegisterDTO;
+import com.example.Phamacy_Project.service.OrderService;
 import com.example.Phamacy_Project.service.ProductService;
 import com.example.Phamacy_Project.service.UserService;
 
@@ -25,38 +32,27 @@ public class HomePageController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
-    public HomePageController(ProductService productService, UserService userService, PasswordEncoder passwordEncoder) {
+    private final OrderService orderService;
+
+    public HomePageController(ProductService productService,
+            UserService userService,
+            PasswordEncoder passwordEncoder,
+            OrderService orderService) {
         this.productService = productService;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
+        this.orderService = orderService;
     }
 
     @GetMapping("/")
     public String getHomePage(Model model) {
-        List<Product> products = this.productService.getAllProducts();
-        model.addAttribute("product1", products);
-        return "client/homepage/show";
-    }
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<Product> prs = this.productService.getAllProducts(pageable);
+        List<Product> products = prs.getContent();
 
-    @GetMapping("/search")
-    public String searchProducts(@RequestParam String keyword, Model model) {
-        List<Product> products = this.productService.searchProducts(keyword);
+        // List<Product> products = this.productService.getAllProducts();
         model.addAttribute("product1", products);
-        model.addAttribute("keyword", keyword);
-        return "client/homepage/show";
-    }
 
-    @GetMapping("/filter")
-    public String filterProducts(
-            @RequestParam(required = false) Double minPrice,
-            @RequestParam(required = false) Double maxPrice,
-            @RequestParam(required = false) String factory,
-            Model model) {
-        List<Product> products = this.productService.filterProducts(minPrice, maxPrice, factory);
-        model.addAttribute("product1", products);
-        model.addAttribute("selectedFactory", factory);
-        model.addAttribute("selectedMinPrice", minPrice);
-        model.addAttribute("selectedMaxPrice", maxPrice);
         return "client/homepage/show";
     }
 
@@ -90,5 +86,23 @@ public class HomePageController {
     @GetMapping("/login")
     public String getLoginPage(Model model) {
         return "client/auth/login";
+    }
+
+    @GetMapping("/accessDeny")
+    public String getDenyPage(Model model) {
+        return "client/auth/deny";
+    }
+
+    @GetMapping("/order-history")
+    public String getOrderHistoryPage(Model model, HttpServletRequest request) {
+        User currentUser = new User();// null
+        HttpSession session = request.getSession(false);
+        long id = (long) session.getAttribute("id");
+        currentUser.setId(id);
+
+        List<Order> orders = this.orderService.fetchOrderByUser(currentUser);
+        model.addAttribute("orders", orders);
+
+        return "client/cart/order-history";
     }
 }

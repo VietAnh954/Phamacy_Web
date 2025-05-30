@@ -1,59 +1,70 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+        <!-- Footer Start -->
+        <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5">
+            <div class="container py-5">
+                <div class="pb-4 mb-4" style="border-bottom: 1px solid rgba(226, 175, 24, 0.5) ;">
+                    <div class="row g-4">
+                        <div class="col-lg-3">
+                            <a href="https://hoidanit.vn" target="_blank">
+                                <h1 class="text-primary mb-0">Phamacy Store</h1>
 
-    <footer class="bg-dark text-light mt-5">
-        <div class="container py-5">
-            <div class="row">
-                <!-- Thông tin công ty -->
-                <div class="col-md-4 mb-4">
-                    <h5>Pharmacy Store</h5>
-                    <p>Địa chỉ: 123 Đường ABC, Quận XYZ</p>
-                    <p>Thành phố Hồ Chí Minh, Việt Nam</p>
-                    <p>Điện thoại: (84) 123-456-789</p>
-                    <p>Email: contact@pharmacystore.com</p>
-                </div>
-
-                <!-- Links hữu ích -->
-                <div class="col-md-4 mb-4">
-                    <h5>Liên kết hữu ích</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="/about" class="text-light">Về chúng tôi</a></li>
-                        <li><a href="/policy" class="text-light">Chính sách bảo mật</a></li>
-                        <li><a href="/terms" class="text-light">Điều khoản sử dụng</a></li>
-                        <li><a href="/shipping" class="text-light">Chính sách vận chuyển</a></li>
-                        <li><a href="/return" class="text-light">Chính sách đổi trả</a></li>
-                    </ul>
-                </div>
-
-                <!-- Kết nối với chúng tôi -->
-                <div class="col-md-4 mb-4">
-                    <h5>Kết nối với chúng tôi</h5>
-                    <div class="social-links">
-                        <a href="#" class="text-light me-3"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-light me-3"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-light me-3"><i class="fab fa-linkedin-in"></i></a>
+                            </a>
+                        </div>
                     </div>
+                </div>
+                <div class="row g-5">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-item">
+                            <h4 class="text-light mb-3">Chất lượng là ưu tiên hàng đầu</h4>
 
-                    <!-- Form đăng ký nhận tin -->
-                    <div class="newsletter mt-4">
-                        <h6>Đăng ký nhận tin</h6>
-                        <form class="mt-3">
-                            <div class="input-group">
-                                <input type="email" class="form-control" placeholder="Email của bạn">
-                                <button class="btn btn-primary" type="submit">Đăng ký</button>
-                            </div>
-                        </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="d-flex flex-column text-start footer-item">
+                            <h4 class="text-light mb-3">Shop Info</h4>
+                            <a class="btn-link" href="#">About Us</a>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="d-flex flex-column text-start footer-item">
+                            <h4 class="text-light mb-3">Account</h4>
+                            <a class="btn-link" href="#">My Account</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-item">
+                            <h4 class="text-light mb-3">Contact</h4>
+                            <p>Address: 123 Phamacy St, HCM City</p>
+                            <p>Website: <a href="#" target="_blank">phamacy.vn</a></p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Copyright -->
-        <div class="text-center py-3 border-top border-secondary">
-            <p class="mb-0">&copy; 2024 Pharmacy Store. Tất cả quyền được bảo lưu.</p>
-        </div>
+        <!-- Footer End -->
 
-        <!-- Scripts -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://kit.fontawesome.com/your-font-awesome-kit.js"></script>
-    </footer>
+        <!-- Copyright Start -->
+        <div class="container-fluid copyright bg-dark py-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        <span class="text-light"><a href="#" target="_blank"><i
+                                    class="fas fa-copyright text-light me-2"></i>Phamacy </a>, All right
+                            reserved.</span>
+                    </div>
+                    <div class="col-md-6 my-auto text-center text-md-end text-white">
+                        <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
+                        <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
+                        <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
+                        Designed By <a class="border-bottom" href="#">VieT Anh</a> Distributed
+                        By <a class="border-bottom" href="#">ThemeWagon</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+        <!-- Copyright End -->

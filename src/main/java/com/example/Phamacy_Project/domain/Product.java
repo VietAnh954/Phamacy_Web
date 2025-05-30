@@ -36,12 +36,13 @@ public class Product {
 
     @NotNull
     @NotEmpty(message = "Mô tả ngắn không được để trống")
-    @Column(columnDefinition = "MEDIUMTEXT")
     private String shortDesc;
 
     @NotNull
     @Min(value = 1, message = "Số lượng phải lớn hơn 0")
     private long quantity;
+
+    private String category; // e.g., thực phẩm chức năng, dược mỹ phẩm, etc.
     private long sold;
     private String factory;
     private String target;
@@ -130,7 +131,15 @@ public class Product {
     public String toString() {
         return "Product [id=" + id + ", name=" + name + ", price=" + price + ", image=" + image + ", detailDesc="
                 + detailDesc + ", shortDesc=" + shortDesc + ", quantity=" + quantity + ", sold=" + sold + ", factory="
-                + factory + ", target=" + target + "]";
+                + factory + ", target=" + target + ", category=" + category + "]";
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
 }

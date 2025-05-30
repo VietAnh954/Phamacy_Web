@@ -2,6 +2,8 @@ package com.example.Phamacy_Project.domain;
 
 import java.util.List;
 
+import com.example.Phamacy_Project.service.validator.StrongPassword;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,7 +11,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "users")
@@ -19,12 +25,21 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String fullName;
+    @NotNull
+    @Email(message = "Email không hợp lệ", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
+
+    @NotNull
+    @Size(min = 2, message = "Password phải có tối thiểu 2 ký tự")
+    @StrongPassword(message = "Password phải có ít nhất 2 ký tự")
     private String password;
+
+    @NotNull
+    @Size(min = 3, message = "Fullname phải có tối thiểu 3 ký tự")
+    private String fullName;
+
     private String phoneNumber;
     private String address;
-
     private String avatar;
 
     @ManyToOne
@@ -34,6 +49,10 @@ public class User {
     // 1 user có nhiều order
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
+
+    // 1 user có 1 cart
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
 
     public Role getRole() {
         return role;
@@ -57,6 +76,14 @@ public class User {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     public String getFullName() {

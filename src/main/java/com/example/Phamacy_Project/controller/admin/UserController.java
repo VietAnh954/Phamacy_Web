@@ -1,7 +1,11 @@
 package com.example.Phamacy_Project.controller.admin;
 
 import java.util.List;
+import java.util.Optional;
+import org.springframework.data.domain.Pageable;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,20 +39,29 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // HOME PAGE
-    @RequestMapping("/")
-    public String getPageHome(Model model) {
-        model.addAttribute("value1", "Xin Chao ");
-        model.addAttribute("value2", "ConKec"); // Add any attributes to the model if needed
-        return "hello";
-    }
-
-    // ADMIN USER PAGE
-
     @RequestMapping("/admin/user")
-    public String getUserPage(Model model) {
-        List<User> users = this.userService.getAllUsers();
+    public String getUserPage(Model model,
+            @RequestParam("page") Optional<String> pageOptional) {
+        int page = 1;
+        try {
+            if (pageOptional.isPresent()) {
+                // convert from String to int
+                page = Integer.parseInt(pageOptional.get());
+            } else {
+                // page = 1
+            }
+        } catch (Exception e) {
+            // page = 1
+            // TODO: handle exception
+        }
+
+        Pageable pageable = PageRequest.of(page - 1, 5);
+        Page<User> usersPage = this.userService.getAllUsers(pageable);
+        List<User> users = usersPage.getContent();
+
         model.addAttribute("users1", users);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", usersPage.getTotalPages());
         return "admin/user/show";
     }
 
@@ -56,7 +69,6 @@ public class UserController {
     public String getUserDetailPage(Model model, @PathVariable long id) {
         User user = this.userService.getUserById(id);
         model.addAttribute("user", user);
-
         model.addAttribute("id", id);
         return "admin/user/detail";
     }
@@ -67,13 +79,23 @@ public class UserController {
         return "admin/user/create";
     }
 
-    @PostMapping("/admin/user/create")
-    public String createUserPage(Model model, @ModelAttribute("newUser") @Valid User hoidanit,
+    @PostMapping(value = "/admin/user/create")
+    public String createUserPage(Model model,
+            @ModelAttribute("newUser") @Valid User hoidanit,
             BindingResult newUserBindingResult,
             @RequestParam("hoidanitFile") MultipartFile file) {
+        // Validate
+
+        // List<FieldError> errors = newUserBindingResult.getFieldErrors();
+        // for (FieldError error : errors) {
+        // System.out.println(">>>>>" + error.getField() + " - " +
+        // error.getDefaultMessage());
+        // }
+
         if (newUserBindingResult.hasErrors()) {
             return "admin/user/create";
         }
+        //
 
         String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
         String hashPassword = this.passwordEncoder.encode(hoidanit.getPassword());
@@ -86,9 +108,8 @@ public class UserController {
         return "redirect:/admin/user";
     }
 
-    // UPDATE USER
     @RequestMapping("/admin/user/update/{id}") // GET
-    public String getUpdateUser(Model model, @PathVariable long id) {
+    public String getUpdateUserPage(Model model, @PathVariable long id) {
         User currentUser = this.userService.getUserById(id);
         model.addAttribute("newUser", currentUser);
         return "admin/user/update";
@@ -98,19 +119,21 @@ public class UserController {
     public String postUpdateUser(Model model, @ModelAttribute("newUser") User hoidanit) {
         User currentUser = this.userService.getUserById(hoidanit.getId());
         if (currentUser != null) {
+            currentUser.setAddress(hoidanit.getAddress());
             currentUser.setFullName(hoidanit.getFullName());
             currentUser.setPhoneNumber(hoidanit.getPhoneNumber());
-            currentUser.setAddress(hoidanit.getAddress());
 
+            // bug here
             this.userService.handleSaveUser(currentUser);
         }
         return "redirect:/admin/user";
     }
 
-    // DELETE USER
     @GetMapping("/admin/user/delete/{id}")
-    public String getDeleteUser(Model model, @PathVariable long id) {
+    public String getDeleteUserPage(Model model, @PathVariable long id) {
         model.addAttribute("id", id);
+        // User user = new User();
+        // user.setId(id);
         model.addAttribute("newUser", new User());
         return "admin/user/delete";
     }

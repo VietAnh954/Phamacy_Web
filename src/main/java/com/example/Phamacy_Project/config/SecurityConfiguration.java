@@ -2,10 +2,21 @@ package com.example.Phamacy_Project.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.session.security.web.authentication.SpringSessionRememberMeServices;
+
+import com.example.Phamacy_Project.service.CustomUserDetailsService;
+import com.example.Phamacy_Project.service.UserService;
+
+import jakarta.servlet.DispatcherType;
 
 @Configuration
 @EnableMethodSecurity(securedEnabled = true)
@@ -16,69 +27,77 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 
-    // @Bean
-    // public UserDetailsService userDetailsService(UserRepository userRepository) {
-    // return new CustomUserDetailsService(userRepository);
-    // }
+    @Bean
+    public UserDetailsService userDetailsService(UserService userService) {
+        return new CustomUserDetailsService(userService);
+    }
 
-    // @Bean
-    // public AuthenticationSuccessHandler customSuccessHandler() {
-    // return new CustomSuccessHandler();
-    // }
+    @Bean
+    public AuthenticationSuccessHandler customSuccessHandler() {
+        return new CustomSuccessHandler();
+    }
 
-    // @Bean
-    // public DaoAuthenticationProvider authProvider(
-    // PasswordEncoder passwordEncoder,
-    // UserDetailsService userDetailsService) {
-    // DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-    // authProvider.setUserDetailsService(userDetailsService);
-    // authProvider.setPasswordEncoder(passwordEncoder);
-    // return authProvider;
-    // }
+    @Bean
+    public DaoAuthenticationProvider authProvider(
+            PasswordEncoder passwordEncoder,
+            UserDetailsService userDetailsService) {
 
-    // // @Bean
-    // // public SpringSessionRememberMeServices rememberMeServices() {
-    // // SpringSessionRememberMeServices rememberMeServices = new
-    // // SpringSessionRememberMeServices();
-    // // // optionally customize
-    // // rememberMeServices.setAlwaysRemember(true);
-    // // return rememberMeServices;
-    // // }
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder);
+        // authProvider.setHideUserNotFoundExceptions(false);
 
-    // @Bean
-    // SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    // http
-    // .authorizeHttpRequests(authorize -> authorize
-    // .dispatcherTypeMatchers(DispatcherType.FORWARD,
-    // DispatcherType.INCLUDE)
-    // .permitAll()
-    // .requestMatchers("/", "/login", "/register", "/client/**", "/css/**",
-    // "/js/**",
-    // "/images/**")
-    // .permitAll()
+        return authProvider;
+    }
 
-    // .requestMatchers("/admin/**").hasRole("ADMIN")
+    @Bean
+    public SpringSessionRememberMeServices rememberMeServices() {
+        SpringSessionRememberMeServices rememberMeServices = new SpringSessionRememberMeServices();
+        // optionally customize
+        rememberMeServices.setAlwaysRemember(true);
 
-    // .anyRequest().permitAll())
-    // // khi logout thì xóa luôn cookie
-    // // .sessionManagement((sessionManagement) -> sessionManagement
-    // // .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-    // // .invalidSessionUrl("/logout?expired")
-    // // .maximumSessions(1)
-    // // .maxSessionsPreventsLogin(false))
-    // // .logout(logout ->
-    // // logout.deleteCookies("JSESSIONID").invalidateHttpSession(true))
+        return rememberMeServices;
+    }
 
-    // // cơ chế remember me
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(authorize -> authorize
+                        .dispatcherTypeMatchers(DispatcherType.FORWARD,
+                                DispatcherType.INCLUDE)
+                        .permitAll()
 
-    // .formLogin(formLogin -> formLogin
-    // .loginPage("/login")
-    // .failureUrl("/login?error")
+                        .requestMatchers("/",
+                                "/login",
+                                "/product/**",
+                                "/client/**",
+                                "/css/**",
+                                "/js/**",
+                                "/images/**",
+                                "/register", "/admin/**")
 
-    // .successHandler(customSuccessHandler())
-    // .permitAll())
-    // // nếu mà Role_User mà vào trang admin thì nó đẩy ra trang này /accessDeny
-    // .exceptionHandling(ex -> ex.accessDeniedPage("/accessDeny"));
-    // return http.build();
-    // }
+                        .permitAll()
+
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+
+                        .anyRequest().authenticated())
+                .sessionManagement((sessionManagement) -> sessionManagement
+                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                        .invalidSessionUrl("/logout?expired")
+                        .maximumSessions(1)
+                        .maxSessionsPreventsLogin(false))
+
+                .logout(logout -> logout.deleteCookies("JSESSIONID").invalidateHttpSession(true))
+
+                .rememberMe(r -> r.rememberMeServices(rememberMeServices()))
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/login")
+                        .failureUrl("/login?error")
+                        .successHandler(customSuccessHandler())
+                        .permitAll())
+                .exceptionHandling(ex -> ex.accessDeniedPage("/accessDeny"));
+
+        return http.build();
+    }
+
 }
