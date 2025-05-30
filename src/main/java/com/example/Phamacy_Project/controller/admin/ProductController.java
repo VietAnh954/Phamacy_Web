@@ -49,7 +49,7 @@ public class ProductController {
             // page = 1; // Nếu có lỗi thì mặc định về trang 1
 
         }
-        Pageable pageable = PageRequest.of(page - 1, 5);
+        Pageable pageable = PageRequest.of(page - 1, 10);
         Page<Product> prs = this.productService.getAllProducts(pageable);
         List<Product> listProducts = prs.getContent();
 

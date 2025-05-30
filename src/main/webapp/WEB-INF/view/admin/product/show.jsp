@@ -59,6 +59,7 @@
                                                                 đ
                                                             </td>
                                                             <td>${product.factory}</td>
+                                                            <td>${product.category}</td>
                                                             <td>
                                                                 <a href="/admin/product/${product.id}"
                                                                     class="btn btn-success">View</a>

@@ -74,8 +74,9 @@
 
                 <!-- Template Javascript -->
                 <script src="/client/js/main.js"></script>
-            </body>
 
-            </html>
+                <% Integer sum=(Integer) session.getAttribute("sum"); out.println("DEBUG: session sum=" + sum);
+                %>
+            </body>
 
             </html>

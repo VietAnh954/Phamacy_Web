@@ -2,6 +2,7 @@ package com.example.Phamacy_Project.controller.client;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
@@ -49,6 +50,10 @@ public class ItemController {
         long productId = id;
         String email = (String) session.getAttribute("email");
         this.productService.handleAddProductToCart(email, productId, session, 1);
+        String referer = request.getHeader("referer");
+        if (referer != null && !referer.isEmpty()) {
+            return "redirect:" + referer;
+        }
         return "redirect:/";
     }
 
@@ -123,7 +128,8 @@ public class ItemController {
         currentUser.setId(id);
 
         this.productService.handlePlaceOrder(currentUser, session, receiverName, receiverAddress, receiverPhone);
-
+        session.setAttribute("sum", 0);
+        System.out.println("SUM after order: " + session.getAttribute("sum"));
         return "redirect:/thanks";
     }
 
@@ -147,22 +153,18 @@ public class ItemController {
 
     @GetMapping("/products")
     public String getProductPage(Model model,
-            ProductCriteriaDTO productCriteriaDTO, HttpServletRequest request) {
+            ProductCriteriaDTO productCriteriaDTO,
+            @RequestParam(value = "category", required = false) String category,
+            HttpServletRequest request) {
 
         int page = 1;
         try {
             if (productCriteriaDTO.getPage().isPresent()) {
-                // convert from String to int
                 page = Integer.parseInt(productCriteriaDTO.getPage().get());
-            } else {
-                // page = 1
             }
         } catch (Exception e) {
-            // page = 1
-            // TODO: handle exception
         }
 
-        // check sort price
         Pageable pageable = PageRequest.of(page - 1, 10);
 
         if (productCriteriaDTO.getSort() != null && productCriteriaDTO.getSort().isPresent()) {
@@ -174,14 +176,16 @@ public class ItemController {
             }
         }
 
+        if (category != null && !category.isEmpty()) {
+            productCriteriaDTO.setCategory(category);
+        }
+
         Page<Product> prs = this.productService.getAllProductsWithSpec(pageable, productCriteriaDTO);
 
-        List<Product> products = prs.getContent().size() > 0 ? prs.getContent()
-                : new ArrayList<Product>();
+        List<Product> products = prs.getContent().size() > 0 ? prs.getContent() : new ArrayList<Product>();
 
         String qs = request.getQueryString();
         if (qs != null && !qs.isBlank()) {
-            // remove page
             qs = qs.replace("page=" + page, "");
         }
 
@@ -189,6 +193,7 @@ public class ItemController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", prs.getTotalPages());
         model.addAttribute("queryString", qs);
+        model.addAttribute("selectedCategory", category);
         return "client/product/show";
     }
 

@@ -42,6 +42,7 @@ public class Product {
     @Min(value = 1, message = "Số lượng phải lớn hơn 0")
     private long quantity;
 
+    private String image_folder;
     private String category; // e.g., thực phẩm chức năng, dược mỹ phẩm, etc.
     private long sold;
     private String factory;
@@ -140,6 +141,14 @@ public class Product {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getImage_folder() {
+        return image_folder;
+    }
+
+    public void setImage_folder(String image_folder) {
+        this.image_folder = image_folder;
     }
 
 }

@@ -10,6 +10,16 @@ public class ProductCriteriaDTO {
     private Optional<List<String>> price;
     private Optional<String> sort;
 
+    private Optional<String> category = Optional.empty();
+
+    public Optional<String> getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = Optional.ofNullable(category);
+    }
+
     public Optional<String> getPage() {
         return page;
     }

@@ -54,9 +54,11 @@ public class ProductService {
     }
 
     public Page<Product> getAllProductsWithSpec(Pageable page, ProductCriteriaDTO productCriteriaDTO) {
-        if (productCriteriaDTO.getTarget() == null
-                && productCriteriaDTO.getFactory() == null
-                && productCriteriaDTO.getPrice() == null) {
+        if ((productCriteriaDTO.getTarget() == null || !productCriteriaDTO.getTarget().isPresent())
+                && (productCriteriaDTO.getFactory() == null || !productCriteriaDTO.getFactory().isPresent())
+                && (productCriteriaDTO.getPrice() == null || !productCriteriaDTO.getPrice().isPresent())
+                && (productCriteriaDTO.getCategory() == null || !productCriteriaDTO.getCategory().isPresent())) {
+            // Không filter gì cả, trả về toàn bộ sản phẩm
             return this.productRepository.findAll(page);
         }
 
@@ -74,6 +76,11 @@ public class ProductService {
             Specification<Product> currentSpecs = this.buildPriceSpecification(productCriteriaDTO.getPrice().get());
             combinedSpec = combinedSpec.and(currentSpecs);
         }
+        if (productCriteriaDTO.getCategory() != null && productCriteriaDTO.getCategory().isPresent()) {
+            Specification<Product> categorySpec = (root, query, cb) -> cb.equal(root.get("category"),
+                    productCriteriaDTO.getCategory().get());
+            combinedSpec = combinedSpec.and(categorySpec);
+        }
 
         return this.productRepository.findAll(combinedSpec, page);
     }
@@ -87,20 +94,20 @@ public class ProductService {
 
             // Set the appropriate min and max based on the price range string
             switch (p) {
-                case "duoi-10-trieu":
+                case "duoi-100-ngan":
                     min = 0;
-                    max = 10000000;
+                    max = 100000;
                     break;
-                case "10-15-trieu":
-                    min = 10000000;
-                    max = 15000000;
+                case "100-300-ngan":
+                    min = 100000;
+                    max = 300000;
                     break;
-                case "15-20-trieu":
-                    min = 15000000;
-                    max = 20000000;
+                case "300-600-ngan":
+                    min = 300000;
+                    max = 600000;
                     break;
-                case "tren-20-trieu":
-                    min = 20000000;
+                case "tren-600-ngan":
+                    min = 600000;
                     max = 200000000;
                     break;
             }
@@ -218,25 +225,27 @@ public class ProductService {
             User user, HttpSession session,
             String receiverName, String receiverAddress, String receiverPhone) {
 
-        // get card by user
+        // get cart by user
         Cart cart = this.cartRepository.findByUser(user);
         if (cart != null) {
             List<CartDetail> cartDetails = cart.getCartDetails();
 
-            if (cartDetails != null) {
+            if (cartDetails != null && !cartDetails.isEmpty()) {
                 // create order
                 Order order = new Order();
                 order.setUser(user);
                 order.setReceiverName(receiverName);
                 order.setReceiverAddress(receiverAddress);
                 order.setReceiverPhone(receiverPhone);
-
                 order.setStatus("PENDING");
+
                 double sum = 0;
                 for (CartDetail cd : cartDetails) {
-                    sum += cd.getPrice();
+                    sum += cd.getPrice() * cd.getQuantity();
                 }
                 order.setTotalPrice(sum);
+
+                // Save order first
                 order = this.orderRepository.save(order);
 
                 // create orderDetail
@@ -249,17 +258,18 @@ public class ProductService {
 
                     this.orderDetailRepository.save(orderDetail);
                 }
-                // step 2: delete cart_detail and cart
+
+                // Delete cart details first
                 for (CartDetail cd : cartDetails) {
-                    this.cartDetailRepository.deleteById(cd.getId());
+                    this.cartDetailRepository.delete(cd);
                 }
 
-                this.cartRepository.deleteById(cart.getId());
+                // Then delete cart
+                this.cartRepository.delete(cart);
 
-                // step 3 : update session
+                // Update session
                 session.setAttribute("sum", 0);
             }
         }
-
     }
 }

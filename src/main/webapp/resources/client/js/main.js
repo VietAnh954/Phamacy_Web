@@ -272,6 +272,12 @@
         searchParams.delete('factory');
         searchParams.delete('target');
         searchParams.delete('price');
+        searchParams.delete('category');
+
+        // Giữ lại category nếu có
+        if (params.has('category')) {
+            searchParams.set('category', params.get('category'));
+        }
 
         if (factoryArr.length > 0) {
             searchParams.set('factory', factoryArr.join(','));
