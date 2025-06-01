@@ -68,8 +68,8 @@
                                     <div class="d-flex align-items-center">
                                         <h1 class="mb-0">Sản phẩm nổi bật</h1>
                                         <!-- <a href="/categories" class="btn btn-warning ms-3">
-                                            Danh mục
-                                        </a> -->
+                            Danh mục
+                        </a> -->
                                     </div>
                                 </div>
                                 <div class="col-lg-8 text-end">
@@ -79,7 +79,6 @@
                                                 <span class="text-dark" style="width: 130px;">All Products</span>
                                             </a>
                                         </li>
-
                                     </ul>
                                 </div>
                             </div>
@@ -90,24 +89,25 @@
                                             <div class="row g-4">
                                                 <c:forEach var="product" items="${product1}">
                                                     <div class="col-md-6 col-lg-4 col-xl-3">
-                                                        <div class="rounded position-relative fruite-item">
+                                                        <div class="rounded position-relative fruite-item"
+                                                            style="border-top: 2px solid #ffffff; border-bottom: 2px solid #01579b; border-left: 2px solid #ffffff; border-right: 2px solid #ffffff; min-height: 400px; position: relative;">
                                                             <div class="fruite-img">
                                                                 <img src="/images/product/${product.image_folder}/${product.image}"
                                                                     class="img-fluid w-100 rounded-top" alt="">
                                                             </div>
                                                             <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
                                                                 style="top: 10px; left: 10px;">Phamacy</div>
-                                                            <div
-                                                                class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                                <h4 style="font-size: 15px">
+                                                            <div class="p-4 rounded-bottom" style="padding: 10px;">
+                                                                <h4 style="font-size: 15px; margin: 0;">
                                                                     <a href="/product/${product.id}">
                                                                         ${product.name}
                                                                     </a>
                                                                 </h4>
-                                                                <p style="font-size: 13px">${product.shortDesc}</p>
-                                                                <div
-                                                                    class="d-flex flex-lg-wrap justify-content-center flex-column">
-                                                                    <p style="font-size: 15px; text-align: center; width: 100%;"
+                                                                <p style="font-size: 13px; margin: 5px 0;">
+                                                                    ${product.shortDesc}</p>
+                                                                <div class="d-flex flex-column align-items-center"
+                                                                    style="margin-top: auto;">
+                                                                    <p style="font-size: 15px; text-align: center; width: 100%; margin: 5px 0;"
                                                                         class="text-dark fw-bold mb-3">
                                                                         <fmt:formatNumber type="number"
                                                                             value="${product.price}" /> đ
@@ -118,7 +118,9 @@
                                                                             name="${_csrf.parameterName}"
                                                                             value="${_csrf.token}" />
                                                                         <button
-                                                                            class="mx-auto btn border border-secondary rounded-pill px-3 text-primary"><i
+                                                                            class="btn border border-secondary rounded-pill px-3 py-1 text-primary"
+                                                                            style="position: absolute; left: 50%; transform: translateX(-50%); bottom: 10px;">
+                                                                            <i
                                                                                 class="fa fa-shopping-bag me-2 text-primary"></i>
                                                                             Add to cart
                                                                         </button>

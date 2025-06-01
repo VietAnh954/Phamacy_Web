@@ -283,7 +283,8 @@
 
                                                 <c:forEach var="product" items="${products}">
                                                     <div class="col-md-6 col-lg-4">
-                                                        <div class="rounded position-relative fruite-item">
+                                                        <div class="rounded position-relative fruite-item"
+                                                            style="border-top: 2px solid #ffffff; border-bottom: 2px solid #01579b; border-left: 2px solid #ffffff; border-right: 2px solid #ffffff; min-height: 400px; position: relative;">
                                                             <div class="fruite-img">
                                                                 <img src="/images/product/${product.image_folder}/${product.image}"
                                                                     ... class="img-fluid w-100 rounded-top" alt="">
@@ -291,8 +292,7 @@
                                                             <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
                                                                 style="top: 10px; left: 10px;">Phamacy
                                                             </div>
-                                                            <div
-                                                                class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                            <div class="p-4 rounded-bottom">
                                                                 <h4 style="font-size: 15px;">
                                                                     <a href="/product/${product.id}">
                                                                         ${product.name}
@@ -315,7 +315,8 @@
                                                                             name="${_csrf.parameterName}"
                                                                             value="${_csrf.token}" />
                                                                         <button
-                                                                            class="mx-auto btn border border-secondary rounded-pill px-3 text-primary"><i
+                                                                            class="mx-auto btn border border-secondary rounded-pill px-2 text-primary"
+                                                                            style="position: absolute; left: 50%; transform: translateX(-50%); bottom: 5px;"><i
                                                                                 class="fa fa-shopping-bag me-2 text-primary"></i>
                                                                             Add to cart
                                                                         </button>
